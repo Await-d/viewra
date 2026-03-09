@@ -6,6 +6,7 @@ import { MarkdownRenderer } from './MarkdownRenderer';
 
 interface ReadmeViewerProps {
   repo: string;
+  onContent?: (content: string) => void;
 }
 
 type FetchState =
@@ -14,7 +15,7 @@ type FetchState =
   | { status: 'not-found' }
   | { status: 'error'; message: string };
 
-export function ReadmeViewer({ repo }: ReadmeViewerProps) {
+export function ReadmeViewer({ repo, onContent }: ReadmeViewerProps) {
   const [state, setState] = useState<FetchState>({ status: 'loading' });
 
   useEffect(() => {
@@ -35,11 +36,12 @@ export function ReadmeViewer({ repo }: ReadmeViewerProps) {
         }
         const text = await res.text();
         setState({ status: 'success', content: text });
+        onContent?.(text);
       })
       .catch((err: unknown) => {
         setState({ status: 'error', message: err instanceof Error ? err.message : '网络错误' });
       });
-  }, [repo]);
+  }, [repo, onContent]);
 
   if (state.status === 'loading') {
     return (

@@ -1,7 +1,12 @@
+'use client';
+
+import Link from 'next/link';
 import type { Components } from 'react-markdown';
 import ReactMarkdown from 'react-markdown';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeRaw from 'rehype-raw';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
+import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 
 import { MermaidChart } from './MermaidChart';
@@ -13,6 +18,10 @@ interface MarkdownRendererProps {
 
 function isExternalHref(href?: string) {
   return typeof href === 'string' && (/^https?:\/\//.test(href) || href.startsWith('mailto:'));
+}
+
+function isInternalHref(href?: string) {
+  return typeof href === 'string' && !isExternalHref(href) && !href.startsWith('#');
 }
 
 const sanitizeSchema = {
@@ -31,6 +40,12 @@ const sanitizeSchema = {
 const components: Components = {
   a: ({ href, children, ...props }) => {
     const external = isExternalHref(href);
+    const internal = isInternalHref(href);
+
+    if (internal && href) {
+      return <Link href={href} {...(props as Record<string, unknown>)}>{children}</Link>;
+    }
+
     return (
       <a
         href={href}
@@ -66,7 +81,12 @@ export function MarkdownRenderer({ content, className }: MarkdownRendererProps) 
     <div className={containerClassName}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeRaw, [rehypeSanitize, sanitizeSchema]]}
+        rehypePlugins={[
+          rehypeRaw,
+          [rehypeSanitize, sanitizeSchema],
+          rehypeSlug,
+          [rehypeAutolinkHeadings, { behavior: 'wrap' }],
+        ]}
         components={components}
       >
         {content}
