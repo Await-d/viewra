@@ -3,7 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import { MarkdownRenderer } from '@/components/MarkdownRenderer';
+import { GitHubRepoStats } from '@/components/GitHubRepoStats';
+import { ProjectContentTabs } from '@/components/ProjectContentTabs';
 import { Tag } from '@/components/Tag';
 import { formatProjectDate, getAllProjects, getProjectBySlug } from '@/lib/projects';
 
@@ -48,7 +49,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         className="inline-flex items-center gap-2 rounded-lg text-sm font-semibold text-slate-600 transition hover:text-sky-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-100"
       >
         <span aria-hidden>←</span>
-        Back to projects
+        返回项目列表
       </Link>
 
       <header className="panel overflow-hidden">
@@ -86,12 +87,12 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_280px]">
         <section className="panel p-8 sm:p-10">
-          <MarkdownRenderer content={project.content} />
+          <ProjectContentTabs content={project.content} repo={project.repo} />
         </section>
 
-        <aside className="space-y-6">
+        <aside className="space-y-6 xl:sticky xl:top-28 xl:self-start">
           <section className="panel p-6">
-            <p className="font-mono text-xs uppercase tracking-[0.24em] text-slate-500">Project links</p>
+            <p className="font-mono text-xs uppercase tracking-[0.24em] text-slate-500">项目链接</p>
             <div className="mt-4 space-y-3 text-sm text-slate-600">
               {project.repo ? (
                 <a
@@ -100,7 +101,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                   rel="noreferrer"
                   className="block rounded-2xl border border-slate-200 px-4 py-3 font-medium transition hover:border-sky-200 hover:text-sky-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
-                  Repository ↗
+                  查看仓库 ↗
                 </a>
               ) : null}
               {project.demo ? (
@@ -110,34 +111,36 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                   rel="noreferrer"
                   className="block rounded-2xl border border-slate-200 px-4 py-3 font-medium transition hover:border-sky-200 hover:text-sky-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
                 >
-                  Live demo ↗
+                  在线演示 ↗
                 </a>
               ) : null}
               {!project.repo && !project.demo ? (
                 <p className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-3 text-slate-500">
-                  No external links were provided for this project.
+                  当前没有提供额外的外部访问链接。
                 </p>
               ) : null}
             </div>
           </section>
 
+          {project.repo ? <GitHubRepoStats repo={project.repo} /> : null}
+
           <section className="panel p-6">
-            <p className="font-mono text-xs uppercase tracking-[0.24em] text-slate-500">Metadata</p>
+            <p className="font-mono text-xs uppercase tracking-[0.24em] text-slate-500">项目信息</p>
             <dl className="mt-4 space-y-4 text-sm leading-6 text-slate-600">
               {project.status ? (
                 <div>
-                  <dt className="font-medium text-slate-900">Status</dt>
+                  <dt className="font-medium text-slate-900">状态</dt>
                   <dd>{project.status}</dd>
                 </div>
               ) : null}
               {formattedDate ? (
                 <div>
-                  <dt className="font-medium text-slate-900">Date</dt>
+                  <dt className="font-medium text-slate-900">时间</dt>
                   <dd>{formattedDate}</dd>
                 </div>
               ) : null}
               <div>
-                <dt className="font-medium text-slate-900">Slug</dt>
+                <dt className="font-medium text-slate-900">标识</dt>
                 <dd>{project.slug}</dd>
               </div>
             </dl>

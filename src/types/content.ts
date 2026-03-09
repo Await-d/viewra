@@ -14,6 +14,12 @@ export interface SocialLink {
   href: string;
 }
 
+export interface ProfileStat {
+  label: string;
+  value: string;
+  description?: string;
+}
+
 export type TechStackMap = Record<string, string[]>;
 
 export interface ProfileData {
@@ -23,6 +29,8 @@ export interface ProfileData {
   email?: string;
   location?: string;
   socials: SocialLink[];
+  stats: ProfileStat[];
+  focusAreas: string[];
   techStack: TechStackMap;
   content: string;
 }

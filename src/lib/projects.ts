@@ -81,20 +81,4 @@ export function getLatestProjects(limit = 2): ProjectData[] {
   return getAllProjects().slice(0, limit);
 }
 
-export function formatProjectDate(date?: string): string | undefined {
-  if (!date) {
-    return undefined;
-  }
-
-  const parsedDate = Date.parse(date);
-
-  if (Number.isNaN(parsedDate)) {
-    return date;
-  }
-
-  return new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  }).format(new Date(parsedDate));
-}
+export { formatProjectDate } from './date';

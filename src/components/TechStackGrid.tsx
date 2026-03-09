@@ -15,7 +15,7 @@ export function TechStackGrid({ techStack }: TechStackGridProps) {
   if (populatedCategories.length === 0) {
     return (
       <div className="rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-6 text-sm leading-7 text-slate-500">
-        Add technologies to the <code>techStack</code> frontmatter in <code>content/profile.md</code> to show them here.
+        在 <code>content/profile.md</code> 的 <code>techStack</code> 字段中添加技术栈内容，即可在此显示。
       </div>
     );
   }

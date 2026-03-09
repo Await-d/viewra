@@ -33,6 +33,54 @@ npm run build
 npm run start
 ```
 
+说明：由于项目启用了 Next.js `standalone` 输出，`npm run start` 会直接运行生成后的 `.next/standalone/server.js`，更适合生产环境与 Docker 部署。
+
+## Docker 构建与部署
+
+项目已经提供以下容器部署文件：
+
+- `Dockerfile`
+- `.dockerignore`
+- `compose.yaml`
+
+默认部署端口为：
+
+```bash
+3000
+```
+
+### 方式 1：直接构建并运行 Docker 镜像
+
+```bash
+docker build -t viewra .
+docker run --name viewra -p 3000:3000 viewra
+```
+
+运行后访问：
+
+```bash
+http://localhost:3000
+```
+
+### 方式 2：使用 Docker Compose 启动
+
+```bash
+docker compose up -d --build
+```
+
+停止服务：
+
+```bash
+docker compose down
+```
+
+### Docker 部署说明
+
+- 容器内服务端口固定为 `3000`
+- `compose.yaml` 已将宿主机 `3000` 映射到容器 `3000`
+- `next.config.ts` 已开启 `standalone` 输出，便于生成更适合生产部署的镜像
+- 示例内容目录 `content/` 会一并打包进镜像，容器启动后可直接读取 Markdown 内容
+
 ## 目录结构
 
 ```bash
@@ -118,33 +166,35 @@ content/projects/your-project.md
 
 ```md
 ---
-title: Your Project
+title: 你的项目名称
 slug: your-project
-summary: Short summary for the project card.
+summary: 用一句中文简介概括项目的目标、价值或核心能力。
 tags:
   - Next.js
   - TypeScript
 cover: /images/your-project-cover.svg
-status: Live
+status: 已上线
 date: 2026-03-01
 repo: https://github.com/your-handle/your-project
 demo: https://your-project.example.com
 ---
 
-这里写项目的详细介绍正文。
+这里写项目的详细介绍正文，例如：项目背景、核心亮点、技术实现方式、上线效果与业务价值。
 ```
 
 ### frontmatter 字段说明
 
 - `title`: 项目名称
 - `slug`: 项目标识，用于详情页路由
-- `summary`: 项目列表页展示的简介
+- `summary`: 项目列表页展示的简介，推荐直接使用中文简介
 - `tags`: 技术标签数组
 - `cover`: 封面图路径（可选）
 - `status`: 项目状态（可选）
 - `date`: 日期，建议使用 `YYYY-MM-DD`
 - `repo`: 仓库地址（可选）
 - `demo`: 在线演示地址（可选）
+
+项目正文推荐直接使用中文撰写，例如：项目背景、亮点、实现方式、上线效果等，这样可以直接用于中文展示型网站。
 
 ## 内容排序逻辑
 

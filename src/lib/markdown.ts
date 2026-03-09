@@ -21,6 +21,10 @@ export function normalizeString(value: unknown): string | undefined {
     return value.toISOString().slice(0, 10);
   }
 
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return String(value);
+  }
+
   if (typeof value !== 'string') {
     return undefined;
   }

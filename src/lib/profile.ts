@@ -3,7 +3,7 @@ import 'server-only';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 
-import type { ProfileData, SocialLink, TechStackMap } from '@/types/content';
+import type { ProfileData, ProfileStat, SocialLink, TechStackMap } from '@/types/content';
 import { TECH_STACK_CATEGORIES } from '@/types/content';
 
 import { isRecord, normalizeString, normalizeStringArray, parseMarkdownFile } from './markdown';
@@ -62,12 +62,40 @@ function normalizeTechStack(value: unknown): TechStackMap {
   };
 }
 
+function normalizeProfileStats(value: unknown): ProfileStat[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.flatMap((item) => {
+    if (!isRecord(item)) {
+      return [];
+    }
+
+    const label = normalizeString(item.label);
+    const valueText = normalizeString(item.value);
+    const description = normalizeString(item.description);
+
+    return label && valueText
+      ? [
+          {
+            label,
+            value: valueText,
+            description,
+          },
+        ]
+      : [];
+  });
+}
+
 export function getProfile(): ProfileData {
   if (!existsSync(PROFILE_PATH)) {
     return {
       name: 'Your Name',
       title: 'Personal Showcase',
       socials: [],
+      stats: [],
+      focusAreas: [],
       techStack: {},
       content: 'Create `content/profile.md` to add your profile details and bio.',
     };
@@ -82,6 +110,8 @@ export function getProfile(): ProfileData {
     email: normalizeString(data.email),
     location: normalizeString(data.location),
     socials: normalizeSocialLinks(data.socials),
+    stats: normalizeProfileStats(data.stats),
+    focusAreas: normalizeStringArray(data.focusAreas),
     techStack: normalizeTechStack(data.techStack),
     content: content || 'Add your profile story in `content/profile.md`.',
   };

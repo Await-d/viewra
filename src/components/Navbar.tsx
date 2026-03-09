@@ -4,13 +4,16 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const navigationItems = [
-  { href: '/profile', label: 'Profile' },
-  { href: '/projects', label: 'Projects' },
+  { href: '/', label: '首页' },
+  { href: '/profile', label: '资料' },
+  { href: '/projects', label: '项目' },
+  { href: '/repos', label: '仓库' },
+  { href: '/editor', label: '编辑器' },
 ];
 
 function isActivePath(pathname: string, href: string) {
-  if (href === '/profile') {
-    return pathname === '/' || pathname.startsWith('/profile');
+  if (href === '/') {
+    return pathname === '/';
   }
 
   return pathname.startsWith(href);
@@ -27,9 +30,9 @@ export function Navbar() {
           className="flex items-center gap-3 rounded-2xl text-sm font-semibold tracking-[0.22em] text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-100"
         >
           <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-slate-900 font-mono text-xs text-sky-100">
-            VS
+            AW
           </span>
-          <span className="font-mono uppercase text-slate-600">Markdown Showcase</span>
+          <span className="font-mono uppercase text-slate-600">Await-d</span>
         </Link>
 
         <nav className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50/80 p-1 text-sm text-slate-600 shadow-sm">

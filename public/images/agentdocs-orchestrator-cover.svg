@@ -1,0 +1,21 @@
+<svg width="1280" height="720" viewBox="0 0 1280 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="720" rx="48" fill="#071019"/>
+  <rect x="72" y="80" width="250" height="120" rx="24" fill="#0F172A" stroke="#38BDF8"/>
+  <rect x="72" y="300" width="250" height="120" rx="24" fill="#0F172A" stroke="#1E293B"/>
+  <rect x="72" y="520" width="250" height="120" rx="24" fill="#0F172A" stroke="#1E293B"/>
+  <rect x="520" y="190" width="250" height="120" rx="24" fill="#0F172A" stroke="#22C55E"/>
+  <rect x="520" y="410" width="250" height="120" rx="24" fill="#0F172A" stroke="#38BDF8"/>
+  <rect x="968" y="300" width="240" height="120" rx="24" fill="#0F172A" stroke="#F59E0B"/>
+  <path d="M322 140H520" stroke="#38BDF8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M322 360H520" stroke="#334155" stroke-width="10" stroke-linecap="round"/>
+  <path d="M322 580H520" stroke="#334155" stroke-width="10" stroke-linecap="round"/>
+  <path d="M770 250H968" stroke="#22C55E" stroke-width="10" stroke-linecap="round"/>
+  <path d="M770 470H968" stroke="#38BDF8" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="420" cy="140" r="18" fill="#38BDF8"/>
+  <circle cx="420" cy="360" r="18" fill="#1E293B"/>
+  <circle cx="420" cy="580" r="18" fill="#1E293B"/>
+  <circle cx="868" cy="250" r="18" fill="#22C55E"/>
+  <circle cx="868" cy="470" r="18" fill="#38BDF8"/>
+  <text x="72" y="62" fill="#7DD3FC" font-family="Arial, sans-serif" font-size="22">Workflow / Knowledge / Multi-Agent</text>
+  <text x="72" y="686" fill="#E2E8F0" font-family="Arial, sans-serif" font-size="52" font-weight="700">agentdocs-orchestrator</text>
+</svg>
