@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+import { githubFetch } from '@/lib/github-fetch';
+
 function extractGitHubRepo(repoUrl: string): string | null {
   try {
     const url = new URL(repoUrl);
@@ -39,7 +41,7 @@ export async function GET(request: NextRequest) {
 
   let response: Response;
   try {
-    response = await fetch(apiUrl, {
+    response = await githubFetch(apiUrl, {
       headers,
       next: { revalidate: 3600 },
     });

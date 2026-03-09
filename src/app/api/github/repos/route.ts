@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+import { githubFetch } from '@/lib/github-fetch';
+
 const GITHUB_USERNAME = 'Await-d';
 
 export interface GitHubRepo {
@@ -30,7 +32,7 @@ export async function GET() {
 
   let response: Response;
   try {
-    response = await fetch(
+    response = await githubFetch(
       `https://api.github.com/users/${GITHUB_USERNAME}/repos?type=public&per_page=100&sort=updated`,
       { headers, next: { revalidate: 3600 } },
     );

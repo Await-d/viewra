@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+import { githubFetch } from '@/lib/github-fetch';
+
 const GITHUB_USERNAME = 'Await-d';
 
 export async function GET() {
@@ -13,7 +15,7 @@ export async function GET() {
 
   let response: Response;
   try {
-    response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, {
+    response = await githubFetch(`https://api.github.com/users/${GITHUB_USERNAME}`, {
       headers,
       next: { revalidate: 3600 },
     });
